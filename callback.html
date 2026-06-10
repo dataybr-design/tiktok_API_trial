@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TikTok OAuth Callback</title>
+</head>
+<body>
+  <h1>TikTok OAuth Callback</h1>
+  <p>Authorization code:</p>
+  <pre id="code"></pre>
+
+  <p>Full URL:</p>
+  <pre id="full-url"></pre>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const error = params.get("error");
+    const errorDescription = params.get("error_description");
+
+    document.getElementById("code").textContent =
+      code || error || "No code found";
+
+    document.getElementById("full-url").textContent =
+      window.location.href;
+
+    if (errorDescription) {
+      const p = document.createElement("p");
+      p.textContent = "Error description: " + errorDescription;
+      document.body.appendChild(p);
+    }
+  </script>
+</body>
+</html>
