@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>TikTok Account Holder Callback</title>
+</head>
+<body>
+  <h1>TikTok Account Holder Callback</h1>
+  <p>Esta página solo muestra los parámetros devueltos por TikTok.</p>
+
+  <h2>Parámetros recibidos</h2>
+  <pre id="output">Cargando...</pre>
+
+  <script>
+    const queryParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.replace("#", ""));
+
+    const params = {};
+
+    for (const [key, value] of queryParams.entries()) {
+      params[key] = value;
+    }
+
+    for (const [key, value] of hashParams.entries()) {
+      params[key] = value;
+    }
+
+    document.getElementById("output").textContent = JSON.stringify(params, null, 2);
+  </script>
+</body>
+</html>
