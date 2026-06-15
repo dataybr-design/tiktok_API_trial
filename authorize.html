@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Autorizar TikTok Account</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      line-height: 1.5;
+    }
+    button {
+      padding: 12px 18px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    code, pre {
+      background: #f4f4f4;
+      padding: 12px;
+      display: block;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border-radius: 6px;
+    }
+    .warning {
+      background: #fff3cd;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Autorizar cuenta TikTok</h1>
+
+  <div class="warning">
+    Esta página solo redirige a TikTok para solicitar autorización.
+    No contiene el secret y no intercambia tokens.
+  </div>
+
+  <p>
+    Pulsa el botón para conectar la cuenta TikTok y conceder permisos a la app.
+  </p>
+
+  <button id="authorizeBtn">Autorizar con TikTok</button>
+
+  <h2>URL que se va a abrir</h2>
+  <pre id="authUrlPreview"></pre>
+
+  <script>
+    const CLIENT_KEY = "TU_CLIENT_KEY_AQUI";
+
+    const REDIRECT_URI = "https://dataybr-design.github.io/tiktok_API_trial/callback.html";
+
+    const SCOPES = [
+      "user.info.basic",
+      "user.info.username",
+      "user.info.stats",
+      "user.info.profile",
+      "user.account.type",
+      "user.insights",
+      "video.list",
+      "video.insights",
+      "comment.list",
+      "comment.list.manage",
+      "video.publish",
+      "video.upload",
+      "biz.spark.auth",
+      "discovery.search.words"
+    ];
+
+    function generateState() {
+      const random = Math.random().toString(36).substring(2);
+      const timestamp = Date.now();
+      return `tiktok_ybr_${timestamp}_${random}`;
+    }
+
+    function buildAuthUrl() {
+      const state = generateState();
+
+      localStorage.setItem("tiktok_oauth_state", state);
+
+      const params = new URLSearchParams({
+        client_key: CLIENT_KEY,
+        scope: SCOPES.join(","),
+        response_type: "code",
+        redirect_uri: REDIRECT_URI,
+        state: state
+      });
+
+      return `https://www.tiktok.com/v2/auth/authorize/?${params.toString()}`;
+    }
+
+    let authUrl = buildAuthUrl();
+
+    document.getElementById("authUrlPreview").textContent = authUrl;
+
+    document.getElementById("authorizeBtn").addEventListener("click", function () {
+      window.location.href = authUrl;
+    });
+  </script>
+</body>
+</html>
