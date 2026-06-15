@@ -1,37 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>TikTok Business OAuth Callback</title>
+  <meta charset="UTF-8" />
+  <title>TikTok OAuth Callback</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      line-height: 1.5;
+    }
+    code, pre {
+      background: #f4f4f4;
+      padding: 12px;
+      display: block;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border-radius: 6px;
+    }
+    .warning {
+      background: #fff3cd;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h1>TikTok Business OAuth Callback</h1>
+  <h1>TikTok OAuth Callback</h1>
 
-  <p>Authorization code / auth_code:</p>
-  <pre id="code"></pre>
+  <div class="warning">
+    Esta página solo muestra los parámetros devueltos por TikTok.
+    No intercambia tokens y no debe contener ningún secret.
+  </div>
 
-  <p>State:</p>
-  <pre id="state"></pre>
-
-  <p>Full URL:</p>
-  <pre id="full-url"></pre>
+  <h2>Parámetros recibidos</h2>
+  <pre id="output">Cargando...</pre>
 
   <script>
-    // Captura los parámetros de la URL
-    const params = new URLSearchParams(window.location.search);
+    const queryParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.replace("#", ""));
 
-    const code =
-      params.get("auth_code") ||   // Para Business API
-      params.get("code") ||        // Alternativa
-      params.get("error") ||
-      "No code found";
+    const params = {};
 
-    const state = params.get("state") || "";
+    for (const [key, value] of queryParams.entries()) {
+      params[key] = value;
+    }
 
-    // Muestra los valores en el HTML
-    document.getElementById("code").textContent = code;
-    document.getElementById("state").textContent = state;
-    document.getElementById("full-url").textContent = window.location.href;
+    for (const [key, value] of hashParams.entries()) {
+      params[key] = value;
+    }
+
+    document.getElementById("output").textContent = JSON.stringify(params, null, 2);
   </script>
 </body>
 </html>
