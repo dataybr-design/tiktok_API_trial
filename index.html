@@ -1,33 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>TikTok Business OAuth Callback</title>
+  <title>TikTok API POC - Yellow Brick Road</title>
 </head>
 <body>
-  <h1>TikTok Business OAuth Callback</h1>
+  <h1>TikTok API POC</h1>
+  <p>
+    Esta aplicación se utiliza para conectar cuentas TikTok autorizadas
+    y consultar métricas orgánicas mediante la API oficial de TikTok.
+  </p>
 
-  <p>Authorization code / auth_code:</p>
-  <pre id="code"></pre>
-
-  <p>State:</p>
-  <pre id="state"></pre>
-
-  <p>Full URL:</p>
-  <pre id="full-url"></pre>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-
-    const code =
-      params.get("auth_code") ||
-      params.get("code") ||
-      params.get("error") ||
-      "No code found";
-    <!-- Commit dummy para refrescar GitHub Pages -->
-    document.getElementById("code").textContent = code;
-    document.getElementById("state").textContent = params.get("state") || "";
-    document.getElementById("full-url").textContent = window.location.href;
-  </script>
+  <ul>
+    <li><a href="authorize.html">Autorizar cuenta TikTok</a></li>
+    <li><a href="privacy.html">Política de privacidad</a></li>
+    <li><a href="terms.html">Términos de servicio</a></li>
+  </ul>
 </body>
 </html>
